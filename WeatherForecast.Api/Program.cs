@@ -13,6 +13,8 @@ builder.Services.AddHttpClient<IWeatherService, WeatherService>(client =>
     client.BaseAddress = new Uri("https://api.open-meteo.com/v1/");
 });
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -48,6 +50,7 @@ app.UseSwaggerUI(options =>
 });
 
 app.UseHttpsRedirection();
+app.MapHealthChecks("/health");
 app.MapControllers();
 
 app.Run();
